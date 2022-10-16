@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: grid;
+            justify-content: center;
+            justify-items: center;
+        }
+        .tasks {
+            max-width: 200px;
+            margin: 5px;
+            border: solid 1px rgb(105, 105, 23);
+            border-radius: 5px;
+            text-align: center;
+            padding: 5px;
+            display: inherit;
+        }
+        .tasks > *{
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="tasks task1"> 
+        <h2>Task 1</h2>
+        <button onclick="myFunc()" type="button">click me! </button>
+        <span id="value-container" style="background: rgb(149, 175, 149);"></span>
+    </div>
+    <div class="tasks task2">
+        <h2>Task 2</h2>
+        <button onclick="myFunc1()" type="button">click me! </button>
+        <input type="number" name="pituus" placeholder="pituus">
+        <input type="number" name="paino" placeholder="paino">
+    </div>
+    <div class="tasks task3">
+        <h2>Task 3</h2>
+        <button onclick="getTimeFunc()" type="button"> Näytä aika </button>
+        <span id="demo"></span>
+    </div>
+    <div class="tasks task4">
+        <h2>Task 4</h2>
+        <button onclick="goTrueLoop()" type="button"> Näytä aika </button>
+        <span id="demo1"></span>
+        <span id="demo2"></span>
+        <span id="demo3"></span>
+    </div>
+</body>
+
+<script> 
+// -------- task 1 -------
+function myFunc () {
+    let container = document.querySelector("#value-container");
+    container.innerText = "Random: " + Math.round(Math.random() * 100000); 
+}
+// -------- task 2 -------
+
+function myFunc1() {
+    // löytää div (class=task2) joka sisältää 2 inputtia. Tarvitaan inputit
+    let divChilds = document.querySelectorAll(".task2 > input"); // löytää [input, input]
+    let [pituusInput, painoInput] = divChilds;  // inputin järjestys: 1 pituus, 2 paino
+    let result;
+    let pituus = pituusInput.value
+    let paino = painoInput.value;
+    if (pituus && paino) {
+        result = getPainoingeksi(pituusInput.value, painoInput.value); // functio palauta arvoksi painoindeksi.
+    } else {
+        result = "täytä molemmat kentät";
+    }
+    alert(result);
+}
+function getPainoingeksi(pituus, paino) {
+    let painoindeksi = paino / pituus; // painoindeksin kaava
+    return painoindeksi
+}
+// -------- task 3 -------
+let date = new Date();
+function getTimeFunc() {
+    date = new Date(); // kun painetaan näytä aika, date asetetaan uusi Date
+    let demo = document.getElementById("demo");
+    demo.innerHTML = "Metodi getTime() palauta luku "  + date.getTime() +  " Tämä luku " +
+    "tarkoita millisekuntia 1970 luvulta laskettuna"  
+}
+// -------- task 4 -------
+function goTrueLoop() {
+    let str_date = String(date.getTime()); // saadan sekunnit Date objektista.
+    let num_array = Array.from(str_date); // tehdään lista numeroita
+    let odd = []; // numerot parittomat
+    let even = []; // numerot parilliset
+    num_array.forEach(num => {
+        // parilliset numerot
+        if (num % 2) {
+            odd.push(num)
+        //parittomat
+        } else {
+            even.push(num)
+        }
+    })
+    // löydetään 3 span tagia
+    let [demo1, demo2, demo3] = document.querySelectorAll(".task4 > span");
+    // laitetaan sisältö tagin
+    demo1.textContent = "sekunnit: " + str_date;
+    demo2.textContent = "parittomat " + odd;
+    demo3.textContent = "parilliset " + even
+}
+
+</script>
+</html>
